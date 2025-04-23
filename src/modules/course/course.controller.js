@@ -28,7 +28,7 @@ export const addCourse = catchError(async (req, res, next) => {
      }
     let course = new Course(req.body)
     await course.save()
-    res.status(201).json({message:"success" , course})
+    res.status(201).json({message:"success"})
 })
 
 export const updateCourse = catchError(async(req, res, next) => {
