@@ -24,7 +24,7 @@ export const singleCourse = catchError(
 export const addCourse = catchError(async (req, res, next) => {
     
     if (req.file) {
-        req.body.image = req.file.filename
+        req.body.image = req.file.path
      }
     let course = new Course(req.body)
     await course.save()

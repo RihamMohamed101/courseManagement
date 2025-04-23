@@ -2,19 +2,20 @@
 import multer from "multer"
 import { v4 as uuidv4 } from 'uuid';
 import { AppError } from "../utils/appError.js";
-
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { cloudinary } from "../utils/cloud.js";
 
 
 
 const  fileUpload = ()=> {
-    const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, `uploads/`)
-  },
-  filename: function (req, file, cb) {
-    cb(null, uuidv4() + '-' + file.originalname)
-  }
-})
+  const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: "courses", // اسم المجلد على Cloudinary
+      allowed_formats: ["jpg", "jpeg", "png"],
+      transformation: [{ width: 500, height: 500, crop: "limit" }],
+    },
+  });
 
 
 function fileFilter (req, file, cb) {
