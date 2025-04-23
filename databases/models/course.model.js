@@ -33,11 +33,6 @@ const schema = new Schema({
 })
 
 
-schema.post('init', function (doc) {
-    if (doc.image)
-        doc.image = process.env.BASE_URL+"uploads/"+ doc.image
-    
-})
 
 
 export const Course = model('Course' , schema)
