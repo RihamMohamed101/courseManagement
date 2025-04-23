@@ -14,7 +14,7 @@ courseRouter.route('/')
             
 courseRouter.route('/:id')
              .delete(deleteCourse)
-             .put(validate(updateCourseSchema),updateCourse)
+             .put(uploadSingleFile('image'),validate(updateCourseSchema),updateCourse)
              .get(singleCourse)
 
 

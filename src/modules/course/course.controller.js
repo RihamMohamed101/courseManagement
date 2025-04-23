@@ -31,7 +31,12 @@ export const addCourse = catchError(async (req, res, next) => {
     res.status(201).json({message:"success" , course})
 })
 
-export const updateCourse = catchError(async(req, res, next) => {
+export const updateCourse = catchError(async (req, res, next) => {
+    
+    if (req.file) {
+        req.body.image = req.file.path
+    }
+    
     let course = await Course.findByIdAndUpdate(
         req.params.id, 
         req.body,
