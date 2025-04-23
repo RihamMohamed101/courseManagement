@@ -6,16 +6,16 @@ import { AppError } from "../../utils/appError.js"
 
 export const allCourses = catchError(async(req, res, next) => {
     let courses = await Course.find()
-    return courses.length == 0 ?  next (new AppError("not founded Courses" , 401)) 
-                                  : res.json({message:"success" , courses})
+    return courses.length == 0 ?  next (new AppError("not founded Courses" , 404)) 
+                                  : res.status(200).json({message:"success" , courses})
       
 })
 
 export const singleCourse = catchError(
     async(req, res, next) => {
     let course = await Course.findById(req.params.id)
-     return course ? res.json({message:"success" , course})
-                   : next (new AppError("not Found" , 401))
+     return course ? res.status(200).json({message:"success" , course})
+                   : next (new AppError("not Found" , 404))
     }
     
 )
@@ -28,7 +28,7 @@ export const addCourse = catchError(async (req, res, next) => {
      }
     let course = new Course(req.body)
     await course.save()
-    res.json({message:"success" , course})
+    res.status(201).json({message:"success" , course})
 })
 
 export const updateCourse = catchError(async(req, res, next) => {
@@ -37,8 +37,8 @@ export const updateCourse = catchError(async(req, res, next) => {
         req.body,
         {new:true}
     )
-   return course ? res.json({message:"success" , course})
-                   : next (new AppError("not Found" , 401))
+   return course ? res.status(200).json({message:"success" , course})
+                   : next (new AppError("not Found" , 404))
     }
 )
 
@@ -46,6 +46,6 @@ export const deleteCourse = catchError(async(req, res, next) => {
     let course = await Course.findByIdAndDelete(
         req.params.id, 
      )
-    return course ? res.json({message:"success" , course})
-                   : next (new AppError("not Found" , 401))
+    return course ? res.status(200).json({message:"success" , course})
+                   : next (new AppError("not Found" , 404))
 })
